@@ -1,0 +1,8 @@
+def ler_seq(FileHandle):
+    file=open(FileHandle, "r")
+    lines=file.readlines()
+    seq=""
+    for line in lines:
+        seq+=line.replace("\n","")
+    file.close()
+    return seq
