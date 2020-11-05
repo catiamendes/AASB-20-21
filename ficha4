@@ -6,3 +6,11 @@ def ler_seq(FileHandle):
         seq+=line.replace("\n","")
     file.close()
     return seq
+
+def ler_FASTA_seq(FileHandle):
+    file=open(FileHandle, "r")
+    fasta_file=file.read()
+    fasta_list=fasta_file.split("\n")
+    seq_list=fasta_list[1:]
+    seq="".join(seq_list)
+    return seq
