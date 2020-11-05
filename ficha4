@@ -1,4 +1,6 @@
 def ler_seq(FileHandle):
+''' 
+'''
     file=open(FileHandle, "r")
     lines=file.readlines()
     seq=""
@@ -8,9 +10,88 @@ def ler_seq(FileHandle):
     return seq
 
 def ler_FASTA_seq(FileHandle):
+'''
+'''
     file=open(FileHandle, "r")
     fasta_file=file.read()
     fasta_list=fasta_file.split("\n")
     seq_list=fasta_list[1:]
     seq="".join(seq_list)
     return seq
+
+def complemento_inverso(seq):
+'''
+
+'''
+    dna1 = seq.lower()
+    dna2 = dna1.replace('a','T')
+    dna3 = dna2.replace('c','G')
+    dna4 = dna3.replace('t','A')
+    dna5 = dna4.replace('g','C')
+    complemento = dna5.upper()
+    compl_inv = complemento[::-1]
+    return compl_inv
+
+
+def traducao(seq):
+'''
+
+'''
+    seq = seq.upper()
+    table = {
+        'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
+        'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
+        'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K',
+        'AGC':'S', 'AGT':'S', 'AGA':'R', 'AGG':'R',
+        'CTA':'L', 'CTC':'L', 'CTG':'L', 'CTT':'L',
+        'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCT':'P',
+        'CAC':'H', 'CAT':'H', 'CAA':'Q', 'CAG':'Q',
+        'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGT':'R',
+        'GTA':'V', 'GTC':'V', 'GTG':'V', 'GTT':'V',
+        'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCT':'A',
+        'GAC':'D', 'GAT':'D', 'GAA':'E', 'GAG':'E',
+        'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
+        'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S',
+        'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
+        'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
+        'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W',
+    }
+    amino = ''
+    lista_codoes = re.findall(r'...', seq)
+    for codao in lista_codoes:
+        for traducao in table:
+             if codao == traducao:
+                amino += table[traducao]
+    return (amino)
+    
+    
+def validar(seq):
+'''
+'''
+    seq=seq.upper()
+    valid = 'ATCG'
+    return all(i in valid for i in seq)
+        
+        
+def contar_bases(seq):
+'''
+'''
+    counts = {}
+    seq = seq.upper()
+    for i in seq: 
+        counts[i]= counts.get(i,0)+1
+    sorted_counts = dict(sorted(counts.items(), key=lambda item: item[0]))
+    return sorted_counts
+    
+  def reading_frames(seq):
+    seq=seq.upper()
+    c1=seq
+    c2=seq[1:]
+    c3=dna[2:]
+    c4=complemento_inverso(dna)
+    c5=c4[1:]
+    c6=c4[2:]
+    l=[c1,c2,c3,c4,c5,c6]
+    return l
+    
+   
