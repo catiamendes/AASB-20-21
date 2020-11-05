@@ -83,15 +83,28 @@ def contar_bases(seq):
     sorted_counts = dict(sorted(counts.items(), key=lambda item: item[0]))
     return sorted_counts
     
-  def reading_frames(seq):
+def reading_frames(seq):
+'''
+'''
     seq=seq.upper()
-    c1=seq
-    c2=seq[1:]
-    c3=dna[2:]
-    c4=complemento_inverso(dna)
-    c5=c4[1:]
-    c6=c4[2:]
-    l=[c1,c2,c3,c4,c5,c6]
+    ci=complemento_inverso(seq)
+    l=[seq,seq[1:],seq[2:],ci,ci[1:],ci[2:]]
     return l
     
+def trad_orfs(seq):
+    l=reading_frames(seq)
+    lista_orfs=[traducao(x) for x in l]
+    return lista_orfs
    
+ def get_proteins(seq):
+ '''
+ '''
+    p = []
+    res = []
+    for o in trad_orfs(seq):
+        p.extend(re.findall(r'(M.*?)_', o))
+    p1 = sorted(p, key= lambda s : (-len(s), s))
+    for proteina in p1:
+        if proteina not in res: 
+            res.append(proteina)
+            print(proteina + '_')
